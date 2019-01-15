@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("QR SCAN"));
         tabLayout.addTab(tabLayout.newTab().setText("MY PAGE"));
-        tabLayout.addTab(tabLayout.newTab().setText("MENU"));
         tabLayout.addTab(tabLayout.newTab().setText("REVIEW"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         //Initializing ViewPager

@@ -26,9 +26,6 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
                 MainTabFragment2 mainTabFragment2 = new MainTabFragment2();
                 return mainTabFragment2;
             case 2:
-                MainTabFragment3 mainTabFragment3 = new MainTabFragment3();
-                return mainTabFragment3;
-            case 3:
                 MainTabFragment4 mainTabFragment4 = new MainTabFragment4();
                 return mainTabFragment4;
 

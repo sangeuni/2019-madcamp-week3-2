@@ -11,7 +11,8 @@ public class MainTabFragment1 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tab_fragment1, container, false);
+        View rootView = inflater.inflate(R.layout.tab_fragment1, container, false);
+        return rootView;
     }
 
 }

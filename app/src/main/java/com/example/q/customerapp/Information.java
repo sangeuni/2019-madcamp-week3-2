@@ -21,7 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Information extends AppCompatActivity {
+public class Information extends BaseActivity {
     private static Context context;
     private Button button;
     private TextView Number, Name, mTextView;
@@ -142,6 +142,8 @@ public class Information extends AppCompatActivity {
                 );
                 Volley.newRequestQueue(getContext()).add(jjjArrayRequest);
                 Toast.makeText(getContext(), "예약 완료!", Toast.LENGTH_SHORT).show();
+                finish();
+
             }
         });
     }

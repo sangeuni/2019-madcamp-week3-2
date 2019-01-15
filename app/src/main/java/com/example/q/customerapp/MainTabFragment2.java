@@ -1,6 +1,7 @@
 package com.example.q.customerapp;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,8 @@ public class MainTabFragment2 extends Fragment {
     int t,wow,aa;
     String ID,IDD;
     String cn2,wn2;
+    ImageView d;
+    private static Typeface typeface;
     final String url = "http://socrip3.kaist.ac.kr:5880/stores";
     final String urll = "http://socrip3.kaist.ac.kr:5880/customers";
             String newid;  ////////얘도 받아옴 bundle로
@@ -40,8 +44,15 @@ public class MainTabFragment2 extends Fragment {
         CN2 = (TextView) rootView.findViewById(R.id.CN2);
         WN1 = (TextView) rootView.findViewById(R.id.WN1);
         WN2 = (TextView) rootView.findViewById(R.id.WN2);
+        d = (ImageView) rootView.findViewById(R.id.icon);
+
         final String url = "http://socrip3.kaist.ac.kr:5880/stores";
         final String urll = "http://socrip3.kaist.ac.kr:5880/customers";
+        if(typeface == null) {
+            typeface = Typeface.createFromAsset(getActivity().getAssets(),
+                    "font.ttf");
+        }
+        setGlobalFont(rootView);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
         JsonArrayRequest jjjArrayRequest = new JsonArrayRequest(Request.Method.GET, urll, null, new Response.Listener<JSONArray>() {
@@ -214,4 +225,18 @@ public class MainTabFragment2 extends Fragment {
     });
         return rootView;
     }
-}
+    private void setGlobalFont(View view) {
+        if(view != null) {
+            if(view instanceof ViewGroup) {
+                ViewGroup viewGroup = (ViewGroup)view;
+                int vgCnt = viewGroup.getChildCount();
+                for(int i = 0; i<vgCnt; i++) {
+                    View v = viewGroup.getChildAt(i);
+                    if(v instanceof TextView) {
+                        ((TextView) v).setTypeface(typeface);
+                    }
+                    setGlobalFont(v);
+                }
+            }
+        }
+    }}

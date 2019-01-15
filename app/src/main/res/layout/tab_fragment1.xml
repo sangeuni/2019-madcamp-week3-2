@@ -8,10 +8,12 @@
 
     <Button
         android:text="SCAN QR CODE"
+        android:paddingHorizontal="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="70dp"
+        android:background="@drawable/rounded"
         android:id="@+id/buttonScan" />
 </RelativeLayout>

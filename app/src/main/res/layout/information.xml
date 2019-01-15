@@ -20,7 +20,8 @@
             android:textSize="25dp" />
         <TextView
             android:id="@+id/textViewName"
-            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:text=""
@@ -68,6 +69,7 @@
         <Button
             android:id="@+id/reservation"
             android:layout_width="180dp"
+            android:background="@drawable/rounded"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:layout_gravity="center_horizontal"

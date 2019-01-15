@@ -23,10 +23,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 public class MainTabFragment2 extends Fragment {
     private static Context context;
-    private Button button2;
+    private Button button2,button1;
     private TextView CN1, CN2, WN1, WN2;
     int t,wow,aa;
     String ID,IDD;
+    String cn2,wn2;
     final String url = "http://socrip3.kaist.ac.kr:5880/stores";
     final String urll = "http://socrip3.kaist.ac.kr:5880/customers";
             String newid;  ////////얘도 받아옴 bundle로
@@ -34,34 +35,37 @@ public class MainTabFragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab_fragment2, container, false);
         button2 = (Button) rootView.findViewById(R.id.button2);
+        button1 = (Button) rootView.findViewById(R.id.button1);
         CN1 = (TextView) rootView.findViewById(R.id.CN1);
         CN2 = (TextView) rootView.findViewById(R.id.CN2);
         WN1 = (TextView) rootView.findViewById(R.id.WN1);
         WN2 = (TextView) rootView.findViewById(R.id.WN2);
         final String url = "http://socrip3.kaist.ac.kr:5880/stores";
         final String urll = "http://socrip3.kaist.ac.kr:5880/customers";
+        button1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
         JsonArrayRequest jjjArrayRequest = new JsonArrayRequest(Request.Method.GET, urll, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 // Do something with response
                 //mTextView.setText(response.toString());
                 // Process the JSON
+                JSONArray contact = response;
                 try {
-                    JSONArray contact = response;
                     for (int i = 0; i < contact.length(); i++) {
+                        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAA");
+                        System.out.println(response.toString());
                         JSONObject jjObject = contact.getJSONObject(i);
                         if (jjObject.getString("phone").equals(((MainActivity)getActivity()).phonenumber) && jjObject.getString("store_name").equals(((MainActivity)getActivity()).storename)) {
                             a = jjObject.getInt("waiting_number");
                             b = jjObject.getInt("customer_number");
+                            cn2 =Integer.toString(b);
+                            wn2 =Integer.toString(a);
                             c=i;
                             ID=jjObject.getString("_id");
-                            CN2.setText(b);
-                            WN2.setText(a);
+                            CN2.setText(cn2);
+                            WN2.setText(wn2);
                             break;
-
-
-                            //////여따추가
-
                         }
                     }
                 } catch (JSONException e) {
@@ -75,9 +79,10 @@ public class MainTabFragment2 extends Fragment {
                         // Do something when error occurred
                     }
                 }
-
         );
         Volley.newRequestQueue(getActivity().getApplicationContext()).add(jjjArrayRequest);
+            }
+        });
 ////////////////////////////취소버튼누르면 일어나는일
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -132,7 +137,6 @@ public class MainTabFragment2 extends Fragment {
                                         }
                                     }
                                     //////////////////여기까지 customer서버에서 수정
-
 //////////////////if문끝 (뒤에 웨이팅넘버 하나씩 줄이는거 끝)
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -153,11 +157,11 @@ public class MainTabFragment2 extends Fragment {
                 Volley.newRequestQueue(getActivity().getApplicationContext()).add(jjjArrayRequest);
                 //////////////////////////////  .////////////////////////////////////////////////////////
                 Toast.makeText(getActivity().getApplicationContext(), "취소 완료!", Toast.LENGTH_SHORT).show();
-
+                CN2.setText("");
+                WN2.setText("");
                 ////////////store waitibng number 수정
                 JsonArrayRequest kkArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                         new Response.Listener<JSONArray>() {
-
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
@@ -166,7 +170,6 @@ public class MainTabFragment2 extends Fragment {
                                         JSONObject jjObject = contact.getJSONObject(i);
                                         if (jjObject.getString("store_name").equals(((MainActivity)getActivity()).storename)) {
                                             aa = jjObject.getInt("waiting_number");
-//                                            IDD = jjObject.getString("_id");
                                             JSONObject hiObject = new JSONObject();
                                             try {
                                                 hiObject.put("waiting_number", aa - 1);
@@ -208,7 +211,6 @@ public class MainTabFragment2 extends Fragment {
                 Volley.newRequestQueue(getActivity().getApplicationContext()).add(kkArrayRequest);
             }
 //////////////////////////취소버튼누르면일어나는일끝
-
     });
         return rootView;
     }

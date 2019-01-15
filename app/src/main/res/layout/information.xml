@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Store Name"
+            android:layout_marginBottom="5dp"
+            android:textSize="25dp" />
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text=""
+            android:textSize="15dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Number of People"
+            android:layout_marginBottom="5dp"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:selectAllOnFocus="false"
+            android:singleLine="true"
+            android:layout_marginBottom="40dp"
+            android:inputType="number"
+            android:hint="단위 빼고 숫자만 입력"
+            android:textSize="15dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Phone number"
+            android:layout_marginBottom="5dp"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/edittext2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:selectAllOnFocus="false"
+            android:singleLine="true"
+            android:layout_marginBottom="40dp"
+            android:inputType="number"
+            android:hint="-빼고 숫자만 입력"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/reservation"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_gravity="center_horizontal"
+            android:text="RESERVATION" />
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
+

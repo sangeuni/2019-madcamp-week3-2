@@ -13,5 +13,6 @@ public class MainTabFragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab_fragment3, container, false);
         return rootView;
+
     }
 }

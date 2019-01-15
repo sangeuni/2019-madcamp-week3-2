@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Creating adapter
         TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         //Set TabSelectedListener

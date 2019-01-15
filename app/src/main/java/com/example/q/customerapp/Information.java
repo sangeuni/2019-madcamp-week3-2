@@ -3,6 +3,7 @@ package com.example.q.customerapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,20 +21,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Information extends BaseActivity {
+public class Information extends AppCompatActivity {
     private static Context context;
     private Button button;
-    private TextView Number,Name,mTextView;
-    public static String numberofpeople="a";
-    public static String phone ="b";
+    private TextView Number, Name, mTextView;
+    public static String numberofpeople = "a";
+    public static String phone = "b";
     int aa = 1000000;
-    int j=0;
-    int number=0;
+    int j = 0;
+    int number = 0;
     String ID;
-    int kiki=0;
+    int kiki = 0;
+
     public static Context getContext() {
         return context;
     }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
@@ -49,8 +52,12 @@ public class Information extends BaseActivity {
         Name.setText(s);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String numberofpeople = edit.getText().toString();
+                numberofpeople = edit.getText().toString();
                 phone = edit2.getText().toString();//this will get a string
+                Intent result = new Intent();
+                result.putExtra("store", s);
+                result.putExtra("phone", phone);
+                setResult(RESULT_OK, result);
                 number = Integer.parseInt(numberofpeople);
 ///////////////////가게에서 지금 손님수랑, 웨이팅넘버수 받아오기////////////////
                 JsonArrayRequest jjjArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -63,20 +70,22 @@ public class Information extends BaseActivity {
                                     for (int i = 0; i < contact.length(); i++) {
                                         JSONObject jjObject = contact.getJSONObject(i);
                                         if (jjObject.getString("store_name").equals(s)) {
-                                            aa=jjObject.getInt("waiting_number");
-                                            ID=jjObject.getString("_id");
-                                            kiki=jjObject.getInt("customer_number");
-                                            JSONObject hiObject = new JSONObject();
+                                            aa = jjObject.getInt("waiting_number");
+                                            ID = jjObject.getString("_id");
+                                            kiki = jjObject.getInt("customer_number");
+
+/////////////////////store 에put하는 함수임///////////////////////
+                                            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                            JSONObject jObject = new JSONObject();
                                             try {
-                                                hiObject.put("_id",ID);
-                                                hiObject.put("store_name", s);
-                                                hiObject.put("waiting_number",aa+1);
-                                                hiObject.put("token", "hihi");
+                                                jObject.put("store_name", s);
+                                                jObject.put("waiting_number", aa + 1);
+                                                jObject.put("people_count", number);
+                                                jObject.put("phone", phone);
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
-/////////////////////store 에 post하는 함수임///////////////////////
-                                            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.PUT, url+ "/"+ID, hiObject, new Response.Listener<JSONObject>() {
+                                            JsonObjectRequest jjsonRequest = new JsonObjectRequest(Request.Method.POST, urll, jObject, new Response.Listener<JSONObject>() {
                                                 @Override
                                                 public void onResponse(JSONObject response) {
                                                     //TODO: handle success
@@ -88,20 +97,20 @@ public class Information extends BaseActivity {
                                                     //TODO: handle failure
                                                 }
                                             });
-                                            Volley.newRequestQueue(Information.getContext()).add(jsonRequest);
-
-
-                                    JSONObject jObject = new JSONObject();
+                                            Volley.newRequestQueue(Information.getContext()).add(jjsonRequest);
+                                        }
+                                    }
+                                    /////////////////////////////////////////////////////////////////////////////////////
+                                    JSONObject hiObject = new JSONObject();
                                     try {
-                                        jObject.put("store_name", s);
-                                        jObject.put("waiting_number",aa+1);
-                                        jObject.put("people_count",number);
-                                        jObject.put("token", "hihihi");
-                                        jObject.put("phone",phone);
+                                        hiObject.put("_id", ID);
+                                        hiObject.put("store_name", s);
+                                        hiObject.put("waiting_number", aa + 1);
+                                        hiObject.put("token", "hihi");
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-                                    JsonObjectRequest jjsonRequest = new JsonObjectRequest(Request.Method.POST, urll, jObject, new Response.Listener<JSONObject>() {
+                                    JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.PUT, url + "/" + s, hiObject, new Response.Listener<JSONObject>() {
                                         @Override
                                         public void onResponse(JSONObject response) {
                                             //TODO: handle success
@@ -113,7 +122,8 @@ public class Information extends BaseActivity {
                                             //TODO: handle failure
                                         }
                                     });
-                                    Volley.newRequestQueue(getContext()).add(jjsonRequest);}}
+                                    Volley.newRequestQueue(Information.getContext()).add(jsonRequest);
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -129,10 +139,9 @@ public class Information extends BaseActivity {
                                 error.printStackTrace();
                             }
                         }
-        );
+                );
                 Volley.newRequestQueue(getContext()).add(jjjArrayRequest);
                 Toast.makeText(getContext(), "예약 완료!", Toast.LENGTH_SHORT).show();
-
             }
         });
     }

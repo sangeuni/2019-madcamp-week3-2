@@ -1,5 +1,6 @@
 package com.example.q.customerapp;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -34,6 +36,7 @@ public class MainTabFragment3 extends Fragment {
     private String store_name;
     private ArrayList<Menu_Item> menuList = null;
     private Menu_Adapter adapter;
+    private static Typeface typeface;
 
 
     @Override
@@ -46,55 +49,14 @@ public class MainTabFragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.tab_fragment3, container, false);
+        if(typeface == null) {
+            typeface = Typeface.createFromAsset(getActivity().getAssets(),
+                    "font.ttf");
+        }
+        setGlobalFont(rootView);
         store_name = "hare";
-        FloatingActionButton fab = rootView.findViewById(R.id.fab);
         final ListView listView = (ListView) rootView.findViewById(R.id.menu_list);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final View register_layout = LayoutInflater.from(getContext())
-                        .inflate(R.layout.add_menu_layout, null);
-                new MaterialStyledDialog.Builder(getContext())
-                        .setIcon(R.drawable.heart)
-                        .setHeaderColor(R.color.colorPrimary)
-                        .setTitle("Add Menu")
-                        .setDescription("Please fill all fields")
-                        .setCustomView(register_layout)
-                        .setNegativeText("CANCEL")
-                        .onNegative(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveText("REGISTER")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                final MaterialEditText edit_name = register_layout.findViewById(R.id.name);
-                                final MaterialEditText edit_price = register_layout.findViewById(R.id.price);
-
-                                if (TextUtils.isEmpty(edit_name.getText().toString())) {
-                                    Toast.makeText(getContext(), "Email cannot be null or empty", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-
-                                if (TextUtils.isEmpty(edit_price.getText().toString())) {
-                                    Toast.makeText(getContext(), "Name cannot be null or empty", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-
-                                try {
-                                    add_menu(edit_name.getText().toString(), edit_price.getText().toString());
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        }).show();
-            }
-        });
 
 
         // get menu list
@@ -130,29 +92,19 @@ public class MainTabFragment3 extends Fragment {
         return rootView;
     }
 
-    private void add_menu(final String name, final String price) throws JSONException {
-
-        JSONObject postparams = new JSONObject();
-        JSONObject post = new JSONObject();
-        postparams.put("name", name);
-        postparams.put("price", price);
-        post.put("menu", postparams);
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url + "/" + store_name, post,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
-
+    private void setGlobalFont(View view) {
+        if(view != null) {
+            if(view instanceof ViewGroup) {
+                ViewGroup viewGroup = (ViewGroup)view;
+                int vgCnt = viewGroup.getChildCount();
+                for(int i = 0; i<vgCnt; i++) {
+                    View v = viewGroup.getChildAt(i);
+                    if(v instanceof TextView) {
+                        ((TextView) v).setTypeface(typeface);
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Failure Callback
-                    }
-                });
-// Adding the request to the queue along with a unique string tag
-        Volley.newRequestQueue(getActivity()).add(jsonObjReq);
+                    setGlobalFont(v);
+                }
+            }
+        }
     }
 }

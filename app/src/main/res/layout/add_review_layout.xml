@@ -7,16 +7,11 @@
     android:padding="20dp">
 
     <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/name"
+        android:id="@+id/review"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="MENU NAME"
+        android:hint="REVIEW"
         android:inputType="textEmailAddress" />
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="PRICE"
-        android:inputType="textEmailAddress" />
+
 </LinearLayout>

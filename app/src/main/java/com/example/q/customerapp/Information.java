@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,8 +48,8 @@ public class Information extends BaseActivity {
         final EditText edit2 = (EditText) findViewById(R.id.edittext2);
         Intent intent = new Intent(this.getIntent());
         final String s = intent.getStringExtra("store");
-        final String url = "http://socrip3.kaist.ac.kr:5880/stores";
-        final String urll = "http://socrip3.kaist.ac.kr:5880/customers";
+        final String url = "http://socrip3.kaist.ac.kr:9280/stores";
+        final String urll = "http://socrip3.kaist.ac.kr:9280/customers";
         Name.setText(s);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -82,6 +83,7 @@ public class Information extends BaseActivity {
                                                 jObject.put("waiting_number", aa + 1);
                                                 jObject.put("people_count", number);
                                                 jObject.put("phone", phone);
+                                                jObject.put("token", FirebaseInstanceId.getInstance().getToken());
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }

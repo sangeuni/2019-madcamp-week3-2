@@ -32,8 +32,8 @@ public class MainTabFragment2 extends Fragment {
     String cn2,wn2;
     ImageView d;
     private static Typeface typeface;
-    final String url = "http://socrip3.kaist.ac.kr:5880/stores";
-    final String urll = "http://socrip3.kaist.ac.kr:5880/customers";
+    final String url = "http://socrip3.kaist.ac.kr:9280/stores";
+    final String urll = "http://socrip3.kaist.ac.kr:9280/customers";
             String newid;  ////////얘도 받아옴 bundle로
     int a,b,c;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,8 +46,6 @@ public class MainTabFragment2 extends Fragment {
         WN2 = (TextView) rootView.findViewById(R.id.WN2);
         d = (ImageView) rootView.findViewById(R.id.icon);
 
-        final String url = "http://socrip3.kaist.ac.kr:5880/stores";
-        final String urll = "http://socrip3.kaist.ac.kr:5880/customers";
         if(typeface == null) {
             typeface = Typeface.createFromAsset(getActivity().getAssets(),
                     "font.ttf");
@@ -62,26 +60,29 @@ public class MainTabFragment2 extends Fragment {
                 //mTextView.setText(response.toString());
                 // Process the JSON
                 JSONArray contact = response;
-                try {
+
                     for (int i = 0; i < contact.length(); i++) {
-                        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAA");
                         System.out.println(response.toString());
+                        try{
                         JSONObject jjObject = contact.getJSONObject(i);
                         if (jjObject.getString("phone").equals(((MainActivity)getActivity()).phonenumber) && jjObject.getString("store_name").equals(((MainActivity)getActivity()).storename)) {
                             a = jjObject.getInt("waiting_number");
                             b = jjObject.getInt("customer_number");
-                            cn2 =Integer.toString(b);
-                            wn2 =Integer.toString(a);
-                            c=i;
-                            ID=jjObject.getString("_id");
+                            cn2 = Integer.toString(b);
+                            wn2 = Integer.toString(a);
+                            c = i;
+                            ID = jjObject.getString("_id");
                             CN2.setText(cn2);
                             WN2.setText(wn2);
                             break;
                         }
-                    }
-                } catch (JSONException e) {
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                } /*catch (JSONException e) {
+
                     e.printStackTrace();
-                }
+                }*/
             }
         },
                 new Response.ErrorListener() {
